@@ -18,7 +18,7 @@ class TodoItemResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'logo' => $this->logo,
+            'image' => $this->image,
             'completed' => $this->completed,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

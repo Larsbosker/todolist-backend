@@ -13,5 +13,6 @@ class TodoItem extends Model
         'title',
         'description',
         'completed',
+        'image',
     ];
 }

@@ -30,9 +30,19 @@ class TodoItemController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'logo' => 'string',
-            'completed' => 'required|boolean',
+            'image' => 'string',
+            'completed' => 'string|required',
         ]);
+
+        if ($request->completed === "true") {
+            $request->merge([
+                'completed' => true
+            ]);
+        } else {
+            $request->merge([
+                'completed' => false
+            ]);
+        }
 
         return TodoItem::create($request->all());
     }
@@ -60,9 +70,19 @@ class TodoItemController extends Controller
         $request->validate([
             'title' => 'string',
             'description' => 'string',
-            'logo' => 'string',
-            'completed' => 'boolean',
+            'image' => 'string',
+            'completed' => 'string',
         ]);
+
+        if ($request->completed === "true") {
+            $request->merge([
+                'completed' => true
+            ]);
+        } else {
+            $request->merge([
+                'completed' => false
+            ]);
+        }
 
         $todoItem = TodoItem::find($id);
         return $todoItem->update($request->all());
