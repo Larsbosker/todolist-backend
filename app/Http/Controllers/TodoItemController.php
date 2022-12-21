@@ -12,7 +12,7 @@ class TodoItemController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return TodoItemCollection
      */
     public function index()
     {
@@ -23,14 +23,14 @@ class TodoItemController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return TodoItem
      */
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'image' => 'string',
+            'image' => 'image',
             'completed' => 'string|required',
         ]);
 
@@ -44,14 +44,24 @@ class TodoItemController extends Controller
             ]);
         }
 
-        return TodoItem::create($request->all());
+        $todo = new TodoItem;
+        $todo->title=$request->input('title');
+        $todo->description=$request->input('description');
+        $todo->image=$request->file('image')->store('images');
+        $todo->completed=$request->input('completed');
+        $todo->save();
+
+        return $todo;
+
+
+//        return TodoItem::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return TodoItemResource
      */
     public function show($id)
     {
