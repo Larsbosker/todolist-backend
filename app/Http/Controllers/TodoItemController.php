@@ -30,8 +30,8 @@ class TodoItemController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'image' => 'image',
-            'completed' => 'string|required',
+            'image' => 'image|mimes:jpg,png,jpeg',
+            'completed' => 'required|string',
         ]);
 
         if ($request->completed === "true") {
@@ -47,7 +47,7 @@ class TodoItemController extends Controller
         $todo = new TodoItem;
         $todo->title=$request->input('title');
         $todo->description=$request->input('description');
-        $todo->image=$request->file('image')->store('images');
+        if ($request->image) $todo->image=$request->file('image')->store('images');
         $todo->completed=$request->input('completed');
         $todo->save();
 
@@ -80,7 +80,7 @@ class TodoItemController extends Controller
         $request->validate([
             'title' => 'string',
             'description' => 'string',
-            'image' => 'string',
+            'image' => 'image|mimes:jpg,png,jpeg',
             'completed' => 'string',
         ]);
 
@@ -94,8 +94,13 @@ class TodoItemController extends Controller
             ]);
         }
 
-        $todoItem = TodoItem::find($id);
-        return $todoItem->update($request->all());
+        $todo = TodoItem::find($id);
+        $todo->title=$request->input('title');
+        $todo->description=$request->input('description');
+        if ($request->image) $todo->image=$request->file('image')->store('images');
+        $todo->completed=$request->input('completed');
+        $todo->update();
+        return $todo;
     }
 
     /**
