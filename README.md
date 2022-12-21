@@ -19,3 +19,5 @@ Kopieër vervolgens het '.env.example' bestand naar een '.env' bestand
 - run command: php artisan migrate
 - run command: php artisan storage:link
 - run command: php artisan serve
+
+Daarnaast is het ook van belang dat in Xampp (of alternatief hiervan) de Apache-server en de MySQL-server worden aangezet.
